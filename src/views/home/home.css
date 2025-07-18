@@ -1,0 +1,11 @@
+.containerHome {
+    width: 95vw;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    margin: 15rem auto 3rem auto;
+    justify-items: center;
+    align-items: start; 
+}

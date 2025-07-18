@@ -1,0 +1,64 @@
+.cardPelicula {
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    position: relative;
+}
+
+.cardPelicula p {
+    text-align: center;
+    padding: 1rem;
+}
+
+.imgContenido {
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    object-fit: fill;
+    opacity: 0.8;
+    transition: opacity 0.2s ease-in-out;
+    position: relative;
+}
+
+.cardPelicula:hover .imgContenido {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18), 0 1.5px 6px rgba(0,0,0,0.10);
+    transition: 
+        opacity 0.2s ease-in-out,
+        transform 0.3s cubic-bezier(0.4, 0.2, 0.2, 1),
+        box-shadow 0.3s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.popularityGeneric {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 2;
+    background: yellow;
+    color: black;
+    font-size: 1.4rem;
+    font-weight: bold;
+    width: 7rem;
+    height: 7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(
+        50% 5%,
+        63% 35%,
+        98% 38%,
+        70% 58%,
+        80% 92%,
+        50% 72%,
+        20% 92%,
+        30% 58%,
+        2% 38%,
+        37% 35%
+    );
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+    transform: rotate(13deg);
+}

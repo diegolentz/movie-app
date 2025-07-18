@@ -1,0 +1,101 @@
+nav {
+    width: 100vw;
+    height: 7rem;
+    border-bottom: 1px solid var(--search-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    backdrop-filter: blur(25px); /* más blur */
+    background-color: rgba(102, 3, 3, 0.15); 
+    padding-left: 1rem;
+    padding-right: 2rem;
+}
+
+.containerNav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    cursor: pointer;
+}
+
+.links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: var(--h3-size);
+}
+
+.search {
+    height: 4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    height: 100%;
+    justify-content: center;
+}
+
+.iconMovie {
+    margin: 0 auto;
+    padding: 0.4rem;
+    height: 100%;
+    width: 4rem;
+    border-radius: 5rem;
+    background-color: var(--search-color);
+}
+
+.searchInput {
+    width: 20vw;
+    height: 100%;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding: 1rem;
+    font-size: var(--p-size);
+    background-color:var(--search-color); 
+    color: black;
+}
+
+.searchButton {
+    height: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    border: none;
+    padding: 0 1rem;
+    font-size: var(--p-size);
+    cursor: pointer;
+    background-color:var(--search-color); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lupaSearch {
+    width: 80%;
+    height: 80%;
+
+}
