@@ -3,12 +3,12 @@ import type { CardGenericHome } from '../models/CardPelicula/cardGenericHome';
 import { CardPeliculaHome } from '../models/cardPelicula.Home';
 import { CardSerieHome } from '../models/CardPelicula/cardSerieHome';
 
-const API_KEY = '812a4ea035f5d16fb07e4f12ad70fc60';
 
 class HomeService {
   async fetchContenidoHome(): Promise<CardGenericHome[]> {
-    const urlMovies = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=es-ES&page=1`;
-    const urlSeries = `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}&language=es-ES&page=1`;
+    const apiKey = import.meta.env.VITE_API_KEY as string;
+    const urlMovies = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=es-ES&page=1`;
+    const urlSeries = `https://api.themoviedb.org/3/tv/airing_today?api_key=${apiKey}&language=es-ES&page=1`;
 
     const [moviesRes, seriesRes] = await Promise.all([
       axios.get(urlMovies),
@@ -40,6 +40,8 @@ class HomeService {
     const allCards = [...movies, ...series].sort(
       (a, b) => b.vote_average - a.vote_average
     );
+    console.log("ENV:", import.meta.env);
+    console.log("API KEY:", import.meta.env.VITE_API_KEY);
     return allCards.map(card => card.toGenericCard());
   }
 }

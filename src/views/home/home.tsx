@@ -22,6 +22,7 @@ export const Home = () => {
     return (
         <>
             <Nav withSearch={false}></Nav>
+                <h1 className='estrenosHome'>Estrenos</h1>
             <div className="containerHome">
                 {contenido.map((item) => (
                     <CardContenido key={item.id} contenido={item} />
