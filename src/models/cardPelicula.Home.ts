@@ -1,4 +1,4 @@
-import { CardGenericHome } from "./CardPelicula/cardGenericHome";
+import { CardGenericHome } from "./cardGenericHome";
 
 export class CardPeliculaHome {
     id: number;
@@ -31,7 +31,8 @@ export class CardPeliculaHome {
             this.poster_path,
             this.vote_average,
             this.first_air_date,
-            this.popularity
+            this.popularity,
+            'movie'
         );
     }
 }

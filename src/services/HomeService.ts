@@ -1,7 +1,7 @@
 import axios from 'axios';
-import type { CardGenericHome } from '../models/CardPelicula/cardGenericHome';
 import { CardPeliculaHome } from '../models/cardPelicula.Home';
-import { CardSerieHome } from '../models/CardPelicula/cardSerieHome';
+import type { CardGenericHome } from '../models/cardGenericHome';
+import { CardSerieHome } from '../models/cardSerieHome';
 
 
 class HomeService {

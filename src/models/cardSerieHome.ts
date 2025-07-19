@@ -31,7 +31,8 @@ export class CardSerieHome {
             this.poster_path,
             this.vote_average,
             this.first_air_date,
-            this.popularity
+            this.popularity,
+            'tv'
         );
     }
 }

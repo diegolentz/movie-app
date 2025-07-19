@@ -1,9 +1,9 @@
 import { use, useEffect, useState } from 'react';
 import { Nav } from '../../components/nav/nav';
 import './home.css'
-import { CardContenido } from '../../components/nav/cardPelicula/cardPelicula';
 import { homeService } from '../../services/HomeService';
-import type { CardGenericHome } from '../../models/CardPelicula/cardGenericHome';
+import { CardContenido } from '../../components/cardPelicula/cardPelicula';
+import type { CardGenericHome } from '../../models/cardGenericHome';
 
 
 export const Home = () => {
