@@ -15,7 +15,8 @@ class HomeService {
       axios.get(urlSeries)
     ]);
 
-    const movies = moviesRes.data.results.map(
+    const moviesData = moviesRes.data as { results: CardPeliculaHome[] };
+    const movies = moviesData.results.map(
       (item: any) => new CardPeliculaHome(
         item.id,
         item.title,
@@ -26,7 +27,8 @@ class HomeService {
       )
     );
 
-    const series = seriesRes.data.results.map(
+    const seriesData = seriesRes.data as { results: CardSerieHome[] };
+    const series = seriesData.results.map(
       (item: any) => new CardSerieHome(
         item.id,
         item.name,

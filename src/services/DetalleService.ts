@@ -7,7 +7,7 @@ class DetalleService {
         const apiKey = import.meta.env.VITE_API_KEY ;
         const response = await axios.get(`https://api.themoviedb.org/3/${type}/${id}?api_key=${apiKey}&language=es-ES`);
         console.log("API Response:", response.data);
-        return response.data;
+        return response.data as DetailPelicula | DetailSerie;
     }
 }
 
