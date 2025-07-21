@@ -1,10 +1,10 @@
 import './nav.css';
+import { Link } from "react-router-dom";
 
 export const Nav = ({ withSearch } : { withSearch: boolean }) => {
     return (
         <nav>
             <div className="containerNav">
-                
                 <div className="title">
                     <h3>Cine Hub</h3>
                     <img className='iconMovie' src="/movie-symbol-of-video-camera_icon-icons.com_72981.svg" alt="" />
@@ -18,9 +18,9 @@ export const Nav = ({ withSearch } : { withSearch: boolean }) => {
                     </div>
                 )}
                 <div className="links">
-                    <a href="/">Home</a>
-                    <a href="/movies">Movies</a>
-                    <a href="/series">Series</a>
+                    <Link to="/">Home</Link>
+                    <Link to="/movies">Peliculas</Link>
+                    <Link to="/series">Series</Link>
                 </div>
             </div>
         </nav>
