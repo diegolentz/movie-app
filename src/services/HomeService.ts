@@ -7,8 +7,8 @@ import { CardSerieHome } from '../models/cardSerieHome';
 class HomeService {
   async fetchContenidoHome(): Promise<CardGenericHome[]> {
     const apiKey = import.meta.env.VITE_API_KEY as string;
-    const urlMovies = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=es-ES&page=1`;
-    const urlSeries = `https://api.themoviedb.org/3/tv/airing_today?api_key=${apiKey}&language=es-ES&page=1`;
+    const urlMovies = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=es-ES&page=1`;
+    const urlSeries = `https://api.themoviedb.org/3/tv/on_the_air?api_key=${apiKey}&language=es-ES&page=1`;
 
     const [moviesRes, seriesRes] = await Promise.all([
       axios.get(urlMovies),

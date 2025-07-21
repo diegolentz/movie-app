@@ -37,6 +37,10 @@ p {
 	font-size: var(--p-size);
 }
 
+b {
+  font-size: var(--b-size);
+}
+
 html {
 	scroll-behavior: smooth;
 }
@@ -52,6 +56,8 @@ html {
   --h2-size: 3rem;
   --h1-size: 4rem;
   --p-size: 1.8rem;
+  --b-size: 1.5rem;
   --nav-color: #40292B; 
   --search-color:  rgba(255, 255, 255, 0.7);
+  --boxShadown : 0 8px 32px 0 rgba(211, 78, 16, 0.37);
 }

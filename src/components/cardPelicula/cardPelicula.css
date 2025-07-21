@@ -33,15 +33,27 @@
     transition: opacity 0.2s ease-in-out;
     position: relative;
 }
+.imgContenido {
+    transition: 
+        opacity 0.2s ease-in-out,
+        transform 0.3s cubic-bezier(0.4, 0.2, 0.2, 1),
+        box-shadow 0.3s cubic-bezier(0.4, 0.2, 0.2, 1),
+        filter 0.2s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.popularityGeneric {
+    transition: transform 0.3s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
 
 .cardPelicula:hover .imgContenido {
     opacity: 1;
     transform: scale(1.05);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18), 0 1.5px 6px rgba(0,0,0,0.10);
-    transition: 
-        opacity 0.2s ease-in-out,
-        transform 0.3s cubic-bezier(0.4, 0.2, 0.2, 1),
-        box-shadow 0.3s cubic-bezier(0.4, 0.2, 0.2, 1);
+    box-shadow: var(--boxShadown);
+    filter: brightness(1.1);
+}
+
+.cardPelicula:hover .popularityGeneric {
+    transform: scale(1.15) rotate(13deg);
 }
 
 .popularityGeneric {
