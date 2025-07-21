@@ -7,11 +7,12 @@
     justify-content: center;
     align-items: center;
     align-content: center;
+    gap: 5rem;
 }
 
 .cardDetalle {
     width: 70vw;
-    height: 70rem;
+    /* height: 70rem; */
     /* Cambia height:auto y min-height: 60vh por height: 60vh */
     background: rgba(255, 255, 255, 0.25);
     box-shadow: var(--boxShadown);
@@ -32,7 +33,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-start;
-    min-width: 40rem;
+    min-width: 30rem;
     flex: 1 1 30rem; 
 }
 
@@ -45,7 +46,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%; /* Ocupa todo el alto disponible */
+    height: 90%; /* Ocupa todo el alto disponible */
 }
 .imgDetail {
     align-self: center;    
@@ -54,6 +55,7 @@
     object-fit: cover;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
     border-radius: 1rem;
+  
 }
 
 .tituloDetalle {
@@ -113,15 +115,15 @@
     justify-content: space-around;
 }
 .chips {
-    /* width: 100%; */
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    align-items: flex-end;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
     flex-wrap: wrap;
     cursor: default;
-    margin-top: 1rem;
 }
 
 .chip {
@@ -142,3 +144,55 @@
     margin-bottom: 2rem;
 }
 
+.containerAutores{
+    width: 90vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    gap: 1rem;
+    padding-bottom: 1rem;
+}
+
+.cardActor {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.imgActor {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.imgActor:hover {
+    box-shadow: var(--boxShadown);
+}
+
+.cardActor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    gap: 1rem;
+    border-radius: 1rem;
+  
+}
+
+.imgActor{
+    width: 15rem;
+    height: 22rem;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.nombreActor{
+    text-wrap: wrap;
+    height: 6rem;
+}
