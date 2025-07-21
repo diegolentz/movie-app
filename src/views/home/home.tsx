@@ -1,9 +1,10 @@
-import {  useEffect, useState } from 'react';
-import { Nav } from '../../components/nav/nav';
-import './home.css'
-import { homeService } from '../../services/HomeService';
+import { useEffect, useState } from 'react';
 import { CardContenido } from '../../components/cardPelicula/cardPelicula';
+import { Nav } from '../../components/nav/nav';
 import type { CardGenericHome } from '../../models/cardGenericHome';
+import { peliculasService } from '../../services/peliculasService';
+import { seriesService } from '../../services/seriesService';
+import './home.css';
 
 
 export const Home = () => {
@@ -12,8 +13,10 @@ export const Home = () => {
     useEffect(() => {
         // Simulate fetching data
         const fetchData = async () => {
-            const response = await homeService.fetchContenidoHome();
-            setContenido(response);
+            const peliculas = await peliculasService.fetchPeliculasHome();
+            const series = await seriesService.fetchSeriesHome();
+            const contenidoOrdenado = [...peliculas, ...series].sort((a, b) => b.average - a.average);
+            setContenido(contenidoOrdenado);
         };
 
         fetchData();
