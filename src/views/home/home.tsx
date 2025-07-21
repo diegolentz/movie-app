@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { Nav } from '../../components/nav/nav';
 import './home.css'
 import { homeService } from '../../services/HomeService';
