@@ -1,6 +1,7 @@
 import axios from "axios";
 import { CardGenericHome } from "../models/cardGenericHome";
 import type { CardSerieHome } from "../models/cardSerieHome";
+import type { DetailSerie } from "../models/detailSerie";
 
 class SerieService {
     async fetchSeriesHome(): Promise<CardGenericHome[]> {
@@ -8,8 +9,8 @@ class SerieService {
         const urlSeries = `https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&language=es-ES&page=1`;
         const res = await axios.get(urlSeries);
         const data = res.data as { results: CardSerieHome[] };
-       
-       const series = data.results.map((item: CardSerieHome) => {
+
+        const series = data.results.map((item: CardSerieHome) => {
             return new CardGenericHome(
                 item.id,
                 item.original_title,
@@ -17,10 +18,22 @@ class SerieService {
                 Number(item.vote_average),
                 item.first_air_date,
                 item.popularity,
-                'tv' 
+                'tv'
             );
         });
         return series.sort((a, b) => b.average - a.average);
+    }
+
+    async getDetalle(id: string): Promise<DetailSerie> {
+        const apiKey = import.meta.env.VITE_API_KEY;
+        const response = await axios.get(`https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=es-ES`);
+        return response.data as DetailSerie;
+    }
+
+    async fetchSeriesAutores(id: number): Promise<any> {
+        const apiKey = import.meta.env.VITE_API_KEY;
+        const response = await axios.get(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=${apiKey}&language=es-ES`);
+        console.log("Autores Response:", response.data);
     }
 }
 

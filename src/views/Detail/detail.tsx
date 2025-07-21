@@ -3,7 +3,8 @@ import { useLocation, useParams } from "react-router-dom";
 import { Nav } from "../../components/nav/nav";
 import { detailPeliculaFromGeneric, type DetailPelicula } from "../../models/detailPelicula";
 import { detailSerieFromGeneric, type DetailSerie } from "../../models/detailSerie";
-import { detalleService } from "../../services/DetalleService";
+import { peliculasService } from "../../services/peliculasService";
+import { seriesService } from "../../services/seriesService";
 import "./detail.css";
 
 export const Detail = () => {
@@ -12,20 +13,37 @@ export const Detail = () => {
     const type = location.pathname.includes('/movie') ? 'movie' : 'tv';
     const isMovie = type === 'movie';
     const [detail, setDetail] = useState<DetailSerie | DetailPelicula>(detailPeliculaFromGeneric({}));
+    const [actors, setActors] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchDetail = async () => {
-            if (params.id) {
-                const data = await detalleService.getDetalle(String(params.id), type);
-                if (isMovie) {
-                    setDetail(detailPeliculaFromGeneric(data));
-                } else {
-                    setDetail(detailSerieFromGeneric(data));
-                }
+            if (isMovie) {
+                const data = await peliculasService.getDetalle(String(params.id));
+                setDetail(detailSerieFromGeneric(data));
+            } else {
+                const data = await seriesService.getDetalle(String(params.id));
+                setDetail(detailSerieFromGeneric(data));
             }
         };
         fetchDetail();
-    }, [params.id, type]);
+    }, [params.id, type, isMovie]);
+
+    useEffect(() => {
+        const fetchAutores = async () => {
+            if (detail.id !== undefined && detail.id !== null) {
+                if (isMovie) {
+                    const autores = await peliculasService.fetchPeliculasAutores(detail.id);
+                    setActors(autores);
+                    console.log("Autores Response:", autores);
+                } else {
+                    const autores = await seriesService.fetchSeriesAutores(detail.id);
+                    setActors(autores);
+                    console.log("Autores Response:", autores);
+                }
+            }
+        };
+        fetchAutores();
+    }, [detail.id, isMovie]);
 
     const mainTitle = isMovie
         ? ('title' in detail ? detail.title : '')
@@ -41,13 +59,12 @@ export const Detail = () => {
     const getCreators = (arr?: Array<{ name: string }>) => arr?.map(x => x.name).join(', ') || "No disponible";
     const getGenresChips = (arr?: Array<{ name: string }>) =>
         arr?.length ? (
-            <div className="chips">{arr.map(g => <p key={g.name} className="chip">{g.name}</p>)}</div>
+            <>{arr.map(g => <p key={g.name} className="chip">{g.name}</p>)}</>
         ) : "No disponible";
 
     // Datos específicos
     const tagline = 'tagline' in detail ? detail.tagline : undefined;
     const overview = detail.overview || "Sin sinopsis disponible.";
-    const genres = getGenresChips(detail.genres);
     const spokenLanguages = getLangs(detail.spoken_languages as any);
 
     // Movie
@@ -71,45 +88,55 @@ export const Detail = () => {
             <Nav withSearch={false} />
             <div className="containerDetalleView">
                 <h1 className="tituloDetailView">Detalle de {isMovie ? 'Película' : 'Serie'}</h1>
+
                 <div className="cardDetalle">
-                    <img className="imgDetail"
-                        src={imgSrc}
-                        alt={mainTitle}
-                    />
-                    <div className="tituloDetalle">
-                        <h1 className="tituloDetail">{mainTitle}</h1>
-                        {tagline && <p className="taglineDetail">{tagline}</p>}
+
+                    <div className="containerImgDetail">
+                        <img className="imgDetail"
+                            src={imgSrc}
+                            alt={mainTitle}
+                        />
                     </div>
-                    <div className="genresDetail">{genres}</div>
 
-                    <section className="datosClave">
-                        {isMovie ? (
-                            <>
-                                <b>Fecha de estreno:  {releaseDate || "No disponible"}</b>
-                                <b>Duración: {runtime ? `${runtime} min` : "No disponible"}</b>
+                    <div className="containerDescripcion">
+                        <div className="tituloDetalle">
+                            <h1 className="tituloDetail">{mainTitle}</h1>
+                            {tagline && <p className="taglineDetail">{tagline}</p>}
+                        </div>
+                        <div className="datosClave">
+                            {isMovie ? (
+                                <>
+                                    <b>Fecha de estreno:  {releaseDate || "No disponible"}</b>
+                                    <b>Duración: {runtime ? `${runtime} min` : "No disponible"}</b>
 
-                            </>
-                        ) : (
-                            <>
-                                <b>Primera emisión: {firstAir || "No disponible"}</b>
-                                <b>Última emisión: {lastAir || "No disponible"}</b>
-                                <b>Temporadas: {seasons || "No disponible"}</b>
-                                <b>Episodios: {episodes || "No disponible"}</b>
-                                <b>Duración episodio: {episodeRunTime ? `${episodeRunTime} min` : "No disponible"}</b>
-                                <b>Creador/es: {creators}</b>
-                                <b>Redes: {networks}</b>
-                            </>
-                        )}
+                                </>
+                            ) : (
+                                <>
+                                    <b>Primera emisión: {firstAir || "No disponible"}</b>
+                                    <b>Última emisión: {lastAir || "No disponible"}</b>
+                                    <b>Temporadas: {seasons || "No disponible"}</b>
+                                    <b>Episodios: {episodes || "No disponible"}</b>
+                                    <b>Duración episodio: {episodeRunTime ? `${episodeRunTime} min` : "No disponible"}</b>
+                                    <b>Creador/es: {creators}</b>
+                                    <b>Transmisión: {networks}</b>
+                                </>
+                            )}
 
-                        <b>Puntaje promedio: {voteAverage}</b>
-                        <b>Idiomas hablados: {spokenLanguages}</b>
-                        <h2>Sinopsis:</h2>
-                        <p>{overview}</p>
+                            <b>Puntaje promedio: {voteAverage}</b>
+                            <b>Idiomas hablados: {spokenLanguages}</b>
+                        </div>
+                        <div className="sinopsisDetail">
+                            <h2 className="h2Sinopsis">Sinopsis:</h2>
+                            <p className="pOverview">{overview}</p>
+                        </div>
 
-                    </section>
-
+                        <div className="chips">{getGenresChips(detail.genres)}</div>
+                    </div>
                 </div>
             </div>
+
+
+
         </>
     );
 };
