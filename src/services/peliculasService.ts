@@ -5,6 +5,7 @@ import type { DetailPelicula } from "../models/detailPelicula";
 import { Actor } from "../models/actor";
 
 class PeliculaService {
+    
 
     async fetchPeliculasHome(): Promise<CardGenericHome[]> {
         const apiKey = import.meta.env.VITE_API_KEY as string;
@@ -58,6 +59,26 @@ class PeliculaService {
                 item.original_title,
                 item.poster_path,
                 item.vote_average,
+                item.first_air_date,
+                item.popularity,
+                'movie'
+            );
+        });
+        return movies.sort((a, b) => b.average - a.average);
+    }
+
+    async searchPeliculas(titulo: string) : Promise<CardGenericHome[]> {
+        const apiKey = import.meta.env.VITE_API_KEY as string;
+        const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=es-ES&query=${titulo}&page=1`;
+        const res = await axios.get(url);
+        const data = res.data as { results: CardPeliculaHome[] };
+
+        const movies = data.results.map((item: CardPeliculaHome) => {
+            return new CardGenericHome(
+                item.id,
+                item.original_title,
+                item.poster_path,
+                Number(item.vote_average),
                 item.first_air_date,
                 item.popularity,
                 'movie'

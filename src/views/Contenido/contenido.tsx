@@ -11,6 +11,16 @@ export const Contenido = () => {
     const location = useLocation();
     const isSerie = location.pathname.includes("/series");
 
+    const buscarContenido = async (titulo : string) => {
+        if (isSerie) {
+            const res = await seriesService.searchSeries(titulo)
+            setContenido(res);
+        } else {
+            const res = await peliculasService.searchPeliculas(titulo)
+            setContenido(res);
+        }
+    }
+
     useEffect(() => {
         // Simulate fetching data
         const fetchData = async () => {
@@ -24,11 +34,11 @@ export const Contenido = () => {
         };
 
         fetchData();
-    }, [isSerie]);
+    }, [isSerie, location.pathname]);
 
     return (
         <>
-            <Nav withSearch={true}></Nav>
+            <Nav withSearch={true} buscador={buscarContenido}></Nav>
                <h1 className='estrenosHome'>Tendencia</h1>
                        <div className="containerHome">
                            {contenido.map((item) => (
