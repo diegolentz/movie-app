@@ -16,3 +16,15 @@
     justify-content: center;
     align-items: center;
 }
+
+@media  (max-width: 900px) {
+    .containerHome {
+        gap: 5rem;
+        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    }
+
+    .cardPelicula {
+        width: 15rem;
+    }
+    
+}
