@@ -2,12 +2,12 @@ import './nav.css';
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 
-export const Nav = ({ withSearch, buscador } : { withSearch: boolean, buscador: (titulo: string) => Promise<void> }) => {
+export const Nav = ({ withSearch, buscador }: { withSearch: boolean, buscador: (titulo: string) => Promise<void> }) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleSearch = () => {
-        const titulo = inputRef.current?.value || "";
-        buscador(titulo);
+        const titulo = (inputRef.current?.value || "").trim();
+        buscador(titulo.toUpperCase());
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -33,7 +33,7 @@ export const Nav = ({ withSearch, buscador } : { withSearch: boolean, buscador: 
                             placeholder="Buscar Peliculas o Series"
                         />
                         <button onClick={handleSearch} className='searchButton' >
-                            <img className='lupaSearch' src="/loupe_86084.svg" alt="Buscar"/>
+                            <img className='lupaSearch' src="/loupe_86084.svg" alt="Buscar" />
                         </button>
                     </div>
                 )}

@@ -11,27 +11,31 @@ export const Contenido = () => {
     const location = useLocation();
     const isSerie = location.pathname.includes("/series");
 
-    const buscarContenido = async (titulo : string) => {
+    const fetchData = async () => {
         if (isSerie) {
-            const res = await seriesService.searchSeries(titulo)
-            setContenido(res);
+            const series = await seriesService.fetchSeriesTendencia();
+            setContenido(series);
         } else {
-            const res = await peliculasService.searchPeliculas(titulo)
-            setContenido(res);
+            const peliculas = await peliculasService.fetchPeliculasTendencia();
+            setContenido(peliculas);
+        }
+    };
+
+    const buscarContenido = async (titulo: string) => {
+        if (titulo != "") {
+            if (isSerie) {
+                const res = await seriesService.searchSeries(titulo)
+                setContenido(res);
+            } else {
+                const res = await peliculasService.searchPeliculas(titulo)
+                setContenido(res);
+            }
+        } else {
+            fetchData();
         }
     }
 
     useEffect(() => {
-        // Simulate fetching data
-        const fetchData = async () => {
-            if (isSerie) {
-                const series = await seriesService.fetchSeriesTendencia();
-                setContenido(series);
-            } else {
-                const peliculas = await peliculasService.fetchPeliculasTendencia();
-                setContenido(peliculas);
-            }
-        };
 
         fetchData();
     }, [isSerie, location.pathname]);
@@ -39,12 +43,12 @@ export const Contenido = () => {
     return (
         <>
             <Nav withSearch={true} buscador={buscarContenido}></Nav>
-               <h1 className='estrenosHome'>Tendencia</h1>
-                       <div className="containerHome">
-                           {contenido.map((item) => (
-                               <CardContenido key={item.id} contenido={item} />
-                           ))}
-                       </div>
-                   </>
+            <h1 className='estrenosHome'>Tendencia</h1>
+            <div className="containerHome">
+                {contenido.map((item) => (
+                    <CardContenido key={item.id} contenido={item} />
+                ))}
+            </div>
+        </>
     );
 }

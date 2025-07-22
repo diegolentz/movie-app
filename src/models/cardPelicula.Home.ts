@@ -7,6 +7,7 @@ export class CardPeliculaHome {
     vote_average: number;
     first_air_date: string;
     popularity: number; 
+    overview: string;
 
     constructor(
         id: number,
@@ -14,7 +15,8 @@ export class CardPeliculaHome {
         poster_path: string,
         vote_average: number,
         first_air_date: string,
-        popularity: number
+        popularity: number,
+        overview: string
     ) {
         this.id = id;
         this.original_title = original_title;
@@ -22,6 +24,7 @@ export class CardPeliculaHome {
         this.vote_average = vote_average;
         this.first_air_date = first_air_date;
         this.popularity = popularity;
+        this.overview = overview;
     }
 
     toGenericCard(): CardGenericHome {
@@ -32,7 +35,8 @@ export class CardPeliculaHome {
             this.vote_average,
             this.first_air_date,
             this.popularity,
-            'movie'
+            'movie',
+            this.overview
         );
     }
 }

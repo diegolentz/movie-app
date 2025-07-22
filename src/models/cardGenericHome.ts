@@ -6,6 +6,7 @@ export class CardGenericHome {
     estreno: string;
     popularity: number;
     type: string;
+    overview: string;
 
     constructor(
         id: number,
@@ -14,7 +15,8 @@ export class CardGenericHome {
         average: number,
         estreno: string,
         popularity: number,
-        type: string
+        type: string,
+        overview: string
     ) {
         this.id = id;
         this.title = title;
@@ -23,6 +25,7 @@ export class CardGenericHome {
         this.estreno = estreno;
         this.popularity = popularity;
         this.type = type;
+        this.overview = overview;
     }
     
 }

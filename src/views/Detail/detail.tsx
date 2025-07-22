@@ -6,6 +6,8 @@ import { detailSerieFromGeneric, type DetailSerie } from "../../models/detailSer
 import { peliculasService } from "../../services/peliculasService";
 import { seriesService } from "../../services/seriesService";
 import "./detail.css";
+import type { Actor } from "../../models/actor";
+import type { Trailer } from "../../models/trailer";
 
 export const Detail = () => {
     const params = useParams();
@@ -13,17 +15,24 @@ export const Detail = () => {
     const type = location.pathname.includes('/movie') ? 'movie' : 'tv';
     const isMovie = type === 'movie';
     const [detail, setDetail] = useState<DetailSerie | DetailPelicula>(detailPeliculaFromGeneric({}));
-    const [actors, setActors] = useState<any[]>([]);
+    const [actors, setActors] = useState<Actor[]>([]);
+    const [trailers, setTrailers] = useState<Trailer[]>([]);
 
     useEffect(() => {
         const fetchDetail = async () => {
             if (isMovie) {
                 const data = await peliculasService.getDetalle(String(params.id));
+                const res = await peliculasService.fetchPeliculasTrailers(String(params.id));
                 setDetail(detailSerieFromGeneric(data));
+                setTrailers(res);
             } else {
                 const data = await seriesService.getDetalle(String(params.id));
+                const res = await seriesService.fetchSeriesTrailers(String(params.id));
                 setDetail(detailSerieFromGeneric(data));
+                setTrailers(res);
             }
+            console.log("trailers", trailers);
+
         };
         fetchDetail();
     }, [params.id, type, isMovie]);
@@ -83,74 +92,96 @@ export const Detail = () => {
 
     return (
         <>
-            <Nav withSearch={false} buscador={async () => {}} />
+            <Nav withSearch={false} buscador={async () => { }} />
             <div className="containerDetalleView">
-            <h1 className="tituloDetailView">Detalle de {isMovie ? 'Película' : 'Serie'}</h1>
+                <h1 className="tituloDetailView">Detalle de {isMovie ? 'Película' : 'Serie'}</h1>
 
-            <div className="cardDetalle">
+                <div className="cardDetalle">
 
-                <div className="containerImgDetail">
-                <img className="imgDetail"
-                    src={imgSrc}
-                    alt={mainTitle}
-                />
-                </div>
-
-                <div className="containerDescripcion">
-                <div className="tituloDetalle">
-                    <h1 className="tituloDetail">{mainTitle}</h1>
-                    {tagline && <p className="taglineDetail">{tagline}</p>}
-                </div>
-                <div className="datosClave">
-                    {isMovie ? (
-                    <>
-                        <b>Fecha de estreno:  {releaseDate || "No disponible"}</b>
-                        <b>Duración: {runtime ? `${runtime} min` : "No disponible"}</b>
-
-                    </>
-                    ) : (
-                    <>
-                        <b>Primera emisión: {firstAir || "No disponible"}</b>
-                        <b>Última emisión: {lastAir || "No disponible"}</b>
-                        <b>Temporadas: {seasons || "No disponible"}</b>
-                        <b>Episodios: {episodes || "No disponible"}</b>
-                        <b>Duración episodio: {episodeRunTime ? `${episodeRunTime} min` : "No disponible"}</b>
-                        <b>Creador/es: {creators}</b>
-                        <b>Transmisión: {networks}</b>
-                    </>
-                    )}
-
-                    <b>Puntaje promedio: {voteAverage}</b>
-                    <b>Idiomas hablados: {spokenLanguages}</b>
-                </div>
-                <div className="sinopsisDetail">
-                    <h2 className="h2Sinopsis">Sinopsis:</h2>
-                    <p className="pOverview">{overview}</p>
-                </div>
-
-                <div className="chips">{getGenresChips(detail.genres)}</div>
-                </div>
-            </div>
-
-            <h2 className="h2Autores">Actores Principales</h2>
-            <div className="containerAutores">
-
-                {actors.length > 0 ? (
-                actors.map(actor => (
-                    <div key={actor.id} className="cardActor">
-                    <img
-                        src={actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : "/placeholder.jpg"}
-                        alt={actor.name}
-                        className="imgActor"
-                    />
-                    <p className="nombreActor">{actor.name}</p>
+                    <div className="containerImgDetail">
+                        <img className="imgDetail"
+                            src={imgSrc}
+                            alt={mainTitle}
+                        />
                     </div>
-                ))
-                ) : (
-                <p>No hay actores disponibles.</p>
+
+                    <div className="containerDescripcion">
+                        <div className="tituloDetalle">
+                            <h1 className="tituloDetail">{mainTitle}</h1>
+                            {tagline && <p className="taglineDetail">{tagline}</p>}
+                        </div>
+                        <div className="datosClave">
+                            {isMovie ? (
+                                <>
+                                    <b>Fecha de estreno:  {releaseDate || "No disponible"}</b>
+                                    <b>Duración: {runtime ? `${runtime} min` : "No disponible"}</b>
+
+                                </>
+                            ) : (
+                                <>
+                                    <b>Primera emisión: {firstAir || "No disponible"}</b>
+                                    <b>Última emisión: {lastAir || "No disponible"}</b>
+                                    <b>Temporadas: {seasons || "No disponible"}</b>
+                                    <b>Episodios: {episodes || "No disponible"}</b>
+                                    <b>Duración episodio: {episodeRunTime ? `${episodeRunTime} min` : "No disponible"}</b>
+                                    <b>Creador/es: {creators}</b>
+                                    <b>Transmisión: {networks}</b>
+                                </>
+                            )}
+
+                            <b>Puntaje promedio: {voteAverage}</b>
+                            <b>Idiomas hablados: {spokenLanguages}</b>
+                        </div>
+                        <div className="sinopsisDetail">
+                            <h2 className="h2Sinopsis">Sinopsis:</h2>
+                            <p className="pOverview">{overview}</p>
+                        </div>
+
+                        <div className="chips">{getGenresChips(detail.genres)}</div>
+                    </div>
+                </div>
+
+                <h2 className="h2Autores">Actores Principales</h2>
+                <div className="containerAutores">
+
+                    {actors.length > 0 ? (
+                        actors.map(actor => (
+                            <div key={actor.id} className="cardActor">
+                                <img
+                                    src={actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : "/placeholder.jpg"}
+                                    alt={actor.name}
+                                    className="imgActor"
+                                />
+                                <p className="nombreActor">{actor.name}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No hay actores disponibles.</p>
+                    )}
+                </div>
+                {trailers.length > 0 && (
+                    <>
+                        <h2>Trailers</h2>
+                        <div className="trailersContainer">
+                            {trailers
+                                .filter((trailer) => trailer.site === "YouTube" && trailer.type === "Trailer")
+                                .map((trailer) => (
+                                    <div key={trailer.id} className="trailerCard">
+                            <iframe
+                                width="560"
+                                height="315"
+                                src={`https://www.youtube.com/embed/${trailer.key}`}
+                                frameBorder="0"
+                                allowFullScreen
+                                className="trailerVideo"></iframe>
+                        </div>
+                    ))}
+            </div>
+                    </>
                 )}
             </div>
-            </div>
+
+
         </>
     );
-};
+}
