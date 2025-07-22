@@ -83,79 +83,74 @@ export const Detail = () => {
 
     return (
         <>
-            <Nav withSearch={false} />
+            <Nav withSearch={false} buscador={async () => {}} />
             <div className="containerDetalleView">
-                <h1 className="tituloDetailView">Detalle de {isMovie ? 'Película' : 'Serie'}</h1>
+            <h1 className="tituloDetailView">Detalle de {isMovie ? 'Película' : 'Serie'}</h1>
 
-                <div className="cardDetalle">
+            <div className="cardDetalle">
 
-                    <div className="containerImgDetail">
-                        <img className="imgDetail"
-                            src={imgSrc}
-                            alt={mainTitle}
-                        />
-                    </div>
-
-                    <div className="containerDescripcion">
-                        <div className="tituloDetalle">
-                            <h1 className="tituloDetail">{mainTitle}</h1>
-                            {tagline && <p className="taglineDetail">{tagline}</p>}
-                        </div>
-                        <div className="datosClave">
-                            {isMovie ? (
-                                <>
-                                    <b>Fecha de estreno:  {releaseDate || "No disponible"}</b>
-                                    <b>Duración: {runtime ? `${runtime} min` : "No disponible"}</b>
-
-                                </>
-                            ) : (
-                                <>
-                                    <b>Primera emisión: {firstAir || "No disponible"}</b>
-                                    <b>Última emisión: {lastAir || "No disponible"}</b>
-                                    <b>Temporadas: {seasons || "No disponible"}</b>
-                                    <b>Episodios: {episodes || "No disponible"}</b>
-                                    <b>Duración episodio: {episodeRunTime ? `${episodeRunTime} min` : "No disponible"}</b>
-                                    <b>Creador/es: {creators}</b>
-                                    <b>Transmisión: {networks}</b>
-                                </>
-                            )}
-
-                            <b>Puntaje promedio: {voteAverage}</b>
-                            <b>Idiomas hablados: {spokenLanguages}</b>
-                        </div>
-                        <div className="sinopsisDetail">
-                            <h2 className="h2Sinopsis">Sinopsis:</h2>
-                            <p className="pOverview">{overview}</p>
-                        </div>
-
-                        <div className="chips">{getGenresChips(detail.genres)}</div>
-                    </div>
+                <div className="containerImgDetail">
+                <img className="imgDetail"
+                    src={imgSrc}
+                    alt={mainTitle}
+                />
                 </div>
 
-                <h2 className="h2Autores">Actores Principales</h2>
-                <div className="containerAutores">
+                <div className="containerDescripcion">
+                <div className="tituloDetalle">
+                    <h1 className="tituloDetail">{mainTitle}</h1>
+                    {tagline && <p className="taglineDetail">{tagline}</p>}
+                </div>
+                <div className="datosClave">
+                    {isMovie ? (
+                    <>
+                        <b>Fecha de estreno:  {releaseDate || "No disponible"}</b>
+                        <b>Duración: {runtime ? `${runtime} min` : "No disponible"}</b>
 
-                    {actors.length > 0 ? (
-                        actors.map(actor => (
-                            <div key={actor.id} className="cardActor">
-                                <img
-                                    src={actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : "/placeholder.jpg"}
-                                    alt={actor.name}
-                                    className="imgActor"
-                                />
-                                <p className="nombreActor">{actor.name}</p>
-                            </div>
-                        ))
+                    </>
                     ) : (
-                        <p>No hay actores disponibles.</p>
+                    <>
+                        <b>Primera emisión: {firstAir || "No disponible"}</b>
+                        <b>Última emisión: {lastAir || "No disponible"}</b>
+                        <b>Temporadas: {seasons || "No disponible"}</b>
+                        <b>Episodios: {episodes || "No disponible"}</b>
+                        <b>Duración episodio: {episodeRunTime ? `${episodeRunTime} min` : "No disponible"}</b>
+                        <b>Creador/es: {creators}</b>
+                        <b>Transmisión: {networks}</b>
+                    </>
                     )}
+
+                    <b>Puntaje promedio: {voteAverage}</b>
+                    <b>Idiomas hablados: {spokenLanguages}</b>
+                </div>
+                <div className="sinopsisDetail">
+                    <h2 className="h2Sinopsis">Sinopsis:</h2>
+                    <p className="pOverview">{overview}</p>
+                </div>
+
+                <div className="chips">{getGenresChips(detail.genres)}</div>
                 </div>
             </div>
 
+            <h2 className="h2Autores">Actores Principales</h2>
+            <div className="containerAutores">
 
-
-
-
+                {actors.length > 0 ? (
+                actors.map(actor => (
+                    <div key={actor.id} className="cardActor">
+                    <img
+                        src={actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : "/placeholder.jpg"}
+                        alt={actor.name}
+                        className="imgActor"
+                    />
+                    <p className="nombreActor">{actor.name}</p>
+                    </div>
+                ))
+                ) : (
+                <p>No hay actores disponibles.</p>
+                )}
+            </div>
+            </div>
         </>
     );
 };
