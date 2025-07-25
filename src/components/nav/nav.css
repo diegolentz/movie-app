@@ -9,6 +9,7 @@ nav {
     backdrop-filter: blur(25px);
     /* más blur */
     background-color: rgba(102, 3, 3, 0.15);
+    
 }
 
 .containerNav {
@@ -58,6 +59,10 @@ nav {
     max-width: fit-content;
     flex: 1;
     justify-content: flex-start;
+}
+
+.title:hover {
+    cursor: pointer;
 }
 
 .iconMovie {

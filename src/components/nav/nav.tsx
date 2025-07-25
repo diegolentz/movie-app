@@ -38,7 +38,7 @@ export const Nav = ({ withSearch, buscador }: { withSearch: boolean, buscador: (
     return (
         <nav>
             <div className="containerNav">
-                <div className="title">
+                <div className="title" onClick={() => navigate("/")}>
                     <h3>Cine Hub</h3>
                     <img className='iconMovie' src="/movie-symbol-of-video-camera_icon-icons.com_72981.svg" alt="" />
                 </div>

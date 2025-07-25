@@ -93,7 +93,7 @@ class SerieService {
                 item.overview
             );
         });
-        const filterSeries = series.filter(item => item.overview !== null && item.overview !== undefined && item.overview.trim() !== "");
+        const filterSeries = series.filter(item => item.overview !== null && item.overview !== undefined && item.overview.trim() !== "" && item.img != null && item.img !== undefined);
         return filterSeries.sort((a, b) => b.average - a.average);
     }
 

@@ -8,6 +8,7 @@ import { seriesService } from "../../services/seriesService";
 import "./detail.css";
 import type { Actor } from "../../models/actor";
 import type { Trailer } from "../../models/trailer";
+import { useLoader } from "../../context/useLoader";
 
 export const Detail = () => {
     const params = useParams();
@@ -17,9 +18,11 @@ export const Detail = () => {
     const [detail, setDetail] = useState<DetailSerie | DetailPelicula>(detailPeliculaFromGeneric({}));
     const [actors, setActors] = useState<Actor[]>([]);
     const [trailers, setTrailers] = useState<Trailer[]>([]);
+    const {loaderInvoke} = useLoader();
 
     useEffect(() => {
         const fetchDetail = async () => {
+            loaderInvoke(true);
             if (isMovie) {
                 const data = await peliculasService.getDetalle(String(params.id));
                 const res = await peliculasService.fetchPeliculasTrailers(String(params.id));
@@ -31,8 +34,7 @@ export const Detail = () => {
                 setDetail(detailSerieFromGeneric(data));
                 setTrailers(res);
             }
-            console.log("trailers", trailers);
-
+            loaderInvoke(false);
         };
         fetchDetail();
     }, [params.id, type, isMovie]);

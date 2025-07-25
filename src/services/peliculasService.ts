@@ -95,7 +95,7 @@ class PeliculaService {
                 item.overview
             );
         });
-        const filteredMovies = movies.filter(item => item.overview !== null && item.overview !== undefined && item.overview.trim() !== "");
+        const filteredMovies = movies.filter(item => item.overview !== null && item.overview !== undefined && item.overview.trim() !== "" && item.img != null && item.img !== undefined);
         return filteredMovies.sort((a, b) => b.average - a.average);
     }
 
