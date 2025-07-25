@@ -18,7 +18,7 @@ export const Detail = () => {
     const [detail, setDetail] = useState<DetailSerie | DetailPelicula>(detailPeliculaFromGeneric({}));
     const [actors, setActors] = useState<Actor[]>([]);
     const [trailers, setTrailers] = useState<Trailer[]>([]);
-    const {loaderInvoke} = useLoader();
+    const { loaderInvoke } = useLoader();
 
     useEffect(() => {
         const fetchDetail = async () => {
@@ -142,25 +142,25 @@ export const Detail = () => {
                         <div className="chips">{getGenresChips(detail.genres)}</div>
                     </div>
                 </div>
+                {actors.length > 0 && (
+                    <>
+                        <h2 className="h2Autores">Actores Principales</h2>
+                        <div className="containerAutores">
 
-                <h2 className="h2Autores">Actores Principales</h2>
-                <div className="containerAutores">
+                            {actors.map(actor => (
+                                <div key={actor.id} className="cardActor">
+                                    <img
+                                        src={actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : "/placeholder.jpg"}
+                                        alt={actor.name}
+                                        className="imgActor"
+                                    />
+                                    <p className="nombreActor">{actor.name}</p>
+                                </div>
+                            ))}
 
-                    {actors.length > 0 ? (
-                        actors.map(actor => (
-                            <div key={actor.id} className="cardActor">
-                                <img
-                                    src={actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : "/placeholder.jpg"}
-                                    alt={actor.name}
-                                    className="imgActor"
-                                />
-                                <p className="nombreActor">{actor.name}</p>
-                            </div>
-                        ))
-                    ) : (
-                        <p>No hay actores disponibles.</p>
-                    )}
-                </div>
+                        </div>
+                    </>
+                )}
                 {trailers.length > 0 && (
                     <>
                         <h2>Trailers</h2>
@@ -169,16 +169,16 @@ export const Detail = () => {
                                 .filter((trailer) => trailer.site === "YouTube" && trailer.type === "Trailer")
                                 .map((trailer) => (
                                     <div key={trailer.id} className="trailerCard">
-                            <iframe
-                                width="560"
-                                height="315"
-                                src={`https://www.youtube.com/embed/${trailer.key}`}
-                                frameBorder="0"
-                                allowFullScreen
-                                className="trailerVideo"></iframe>
+                                        <iframe
+                                            width="560"
+                                            height="315"
+                                            src={`https://www.youtube.com/embed/${trailer.key}`}
+                                            frameBorder="0"
+                                            allowFullScreen
+                                            className="trailerVideo"></iframe>
+                                    </div>
+                                ))}
                         </div>
-                    ))}
-            </div>
                     </>
                 )}
             </div>
